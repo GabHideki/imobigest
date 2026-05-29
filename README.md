@@ -14,6 +14,9 @@ Sistema de gestão imobiliária desenvolvido em Java como projeto acadêmico da 
 
 - Java
 - Maven
+- Spring Boot
+- PostgreSQL
+- Lombok
 - Git e GitHub
 - Programação Orientada a Objetos (POO)
 
@@ -22,17 +25,15 @@ Sistema de gestão imobiliária desenvolvido em Java como projeto acadêmico da 
 ```text
 src/main/java/br/com/imobigest
 ├── controller
-├── dao
 ├── model
-├── service
-└── util
+└── repository
 ```
 
 ## Como Executar
 
 ```bash
 mvn clean install
-mvn exec:java
+mvn spring-boot:run
 ```
 
 ## Autores
