@@ -4,10 +4,7 @@
  */
 package br.com.imobigest.controller;
 
-/**
- *
- * @author ghide
- */
+
 public class EnderecoController {
     
 }
