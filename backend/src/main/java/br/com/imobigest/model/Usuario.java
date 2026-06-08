@@ -4,6 +4,8 @@
  */
 package br.com.imobigest.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,11 +30,20 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(unique = true)
     private String usuario;
+    
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
     private String nome;
+    
+    @Column(unique = true)
     private String cpf;
+    
+    @Column(unique = true)
     private String email;
+    
     private String telefone;
     
     @Enumerated(EnumType.STRING)
