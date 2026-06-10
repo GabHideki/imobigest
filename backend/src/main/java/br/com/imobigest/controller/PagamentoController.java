@@ -1,6 +1,6 @@
 /*
- * Feito por Gabriel Hideki de Almeida Yamamoto
- * Adaptado para gerenciamento de Pagamentos e Aluguéis
+ * Feito por Gustavo Vinícius Vieira Cravo
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package br.com.imobigest.controller;
 
@@ -29,13 +29,13 @@ public class PagamentoController {
     @Autowired
     private PagamentoRepository repository;
 
-    // LISTAR TODOS OS PAGAMENTOS
+    // Listar os pagamentos
     @GetMapping
     public List<Pagamento> listar() {
         return repository.findAll();
     }
 
-    // LISTAR APENAS PAGAMENTOS PENDENTES
+    // Listar apenas pagamentos pendentes
     // Rota: GET /pagamentos/pendentes
     
     
@@ -48,13 +48,13 @@ public class PagamentoController {
     */
     
     
-    // ADICIONAR / GERAR PAGAMENTO (Serve para parcelas avulsas ou Aluguéis)
+    // Adicionar pagamentos e aluguéis
     @PostMapping
     public Pagamento create(@RequestBody Pagamento pagamento) {
         return repository.save(pagamento);
     }
 
-    // BUSCAR PAGAMENTO POR ID
+    // Buscar pagamento por ID
     @GetMapping("/{id}")
     public Pagamento read(@PathVariable Long id) {
         return repository.findById(id)
@@ -64,7 +64,7 @@ public class PagamentoController {
                             "Pagamento não encontrado"));
     }
 
-    // EDITAR PAGAMENTO
+    // Editar pagamentos
     @PutMapping("/{id}")
     public Pagamento update(@PathVariable Long id, @RequestBody Pagamento pagamento) {
         Pagamento antigo = read(id);
@@ -77,19 +77,18 @@ public class PagamentoController {
         return repository.save(antigo);
     }
 
-    // ENCERRAR PAGAMENTO (Quitar/Baixar uma parcela pendente)
-    // Rota: PUT /pagamentos/{id}/encerrar
+    // Encerrar pagamentos/parcelas
     @PutMapping("/{id}/encerrar")
     public Pagamento encerrarPagamento(@PathVariable Long id) {
         Pagamento pagamento = read(id);
         
-        // Altera o status para PAGO (ou o equivalente concluído no seu Enum, ex: PAGO, CONCLUIDO)
+        
         pagamento.setStatus(StatusPagamento.PAGO); 
         
         return repository.save(pagamento);
     }
 
-    // EXCLUIR PAGAMENTO
+    // Excluir pagamento
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         Pagamento pagamento = read(id);

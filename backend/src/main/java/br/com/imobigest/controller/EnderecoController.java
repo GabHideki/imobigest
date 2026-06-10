@@ -2,10 +2,7 @@
  * Feito por Gustavo Vinícius Vieira Cravo
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-/*
- * Feito por Gustavo Vinícius Vieira Cravo
- * Adaptado para gerenciamento de Endereços
- */
+
 package br.com.imobigest.controller;
 
 import br.com.imobigest.model.Endereco;

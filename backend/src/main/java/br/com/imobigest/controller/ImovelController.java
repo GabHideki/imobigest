@@ -2,10 +2,7 @@
  * Feito por Gustavo Vinícius Vieira Cravo
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-/*
- * Feito por Gustavo Vinícius Vieira Cravo
- * Adaptado para gerenciamento de Imóveis
- */
+
 package br.com.imobigest.controller;
 
 import br.com.imobigest.model.Imovel;
@@ -32,19 +29,19 @@ public class ImovelController {
     @Autowired
     private ImovelRepository repository;
 
-    // LISTAR TODOS OS IMÓVEIS
+    // Listar imoveis
     @GetMapping
     public List<Imovel> listar() {
         return repository.findAll();
     }
 
-    // ADICIONAR IMÓVEL
+    // Adicionar imóveis
     @PostMapping
     public Imovel create(@RequestBody Imovel imovel) {
         return repository.save(imovel);
     }
 
-    // BUSCAR IMÓVEL POR ID
+    // BUuscar imóveis
     @GetMapping("/{id}")
     public Imovel read(@PathVariable Long id) {
         return repository.findById(id)
@@ -54,13 +51,13 @@ public class ImovelController {
                             "Imóvel não encontrado"));
     }
 
-    // EDITAR IMÓVEL
+    // Editar imóveis
     @PutMapping("/{id}")
     public Imovel update(@PathVariable Long id, @RequestBody Imovel imovel) {
-        // Valida se o imóvel existe no banco de dados
+        
         Imovel antigo = read(id);
 
-        // Atualiza os campos com as novas informações fornecidas
+        
         antigo.setDescricao(imovel.getDescricao());
         antigo.setValorCompra(imovel.getValorCompra());
         antigo.setValorAluguel(imovel.getValorAluguel());
@@ -71,7 +68,7 @@ public class ImovelController {
         return repository.save(antigo);
     }
 
-    // EXCLUIR IMÓVEL
+    // Excluir imóveis
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         Imovel imovel = read(id);
