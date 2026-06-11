@@ -18,5 +18,5 @@ public enum StatusContrato {
     /**
      * Contrato inativo
      */
-    INVATIVO
+    INATIVO
 }
