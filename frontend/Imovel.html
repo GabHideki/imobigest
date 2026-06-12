@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imoveis</title>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="Tabelas.css">
+</head>
+
+<body>
+
+    <main>
+        <!--MENU LATERAL-->
+        <aside class="menu" id="menu">
+
+            <!-- Botão hambúrguer -->
+            <div class="topo-menu">
+                <button id="btn-menu" class="btn-menu" type="button" aria-label="Abrir ou fechar menu">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+
+            <!-- Navegação -->
+            <nav>
+                <ul>
+                    <li>
+
+                        <a href="/dashboard">
+                            <i class="bi bi-speedometer2"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li>
+
+                        <a href="/clientes">
+                            <i class="bi bi-people"></i>
+                            <span>Clientes</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/imoveis">
+                            <i class="bi bi-house-door"></i>
+                            <span>Imóveis</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/contratos">
+                            <i class="bi bi-file-earmark-text"></i>
+                            <span>Contratos</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/configuracoes">
+                            <i class="bi bi-gear"></i>
+                            <span>Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Rodapé do menu -->
+            <div class="menu-footer">
+                <button id="btn-sair" class="btn-sair" type="button">
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    <span>Sair</span>
+                </button>
+            </div>
+        </aside>
+
+        <!--CONTEÚDO -->
+        <section class="conteudo">
+            <h1>Imóveis</h1>
+
+            <div class="tabela">
+                <!-- Barra superior -->
+                <div class="container-busca">
+                    <div class="grupo-busca">
+                        <div class="busca">
+                            <input id="buscar" class="input-busca" type="text" placeholder="Buscar cliente...">
+                        </div>
+
+                        <div class="filtro">
+                            <select id="filtro" class="select-filtro">
+                                <option value="todos">
+                                    Todos
+                                </option>
+
+                                <option value="ativos">
+                                    Disponíveis
+                                </option>
+
+                                <option value="inativos">
+                                    Indisponíveis
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="btn-adicionar-cliente" class="btn-adicionar" type="button">
+                        <i class="bi bi-plus-lg"></i>
+                        Cliente
+                    </button>
+                </div>
+
+                <!-- Tabela -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Endereço</th>
+                            <th>Tipo</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <!--
+                        O JavaScript preencherá este tbody.
+                        Os dados virão do backend.
+                    -->
+
+                    <tbody id="listaClientes">
+                    </tbody>
+                </table>
+
+                <!-- Paginação -->
+                <div class="rodape-tabela">
+                    <span id="textoPaginacao">
+                        Mostrando 0 de 0 clientes
+                    </span>
+
+                    <div id="pg" class="paginacao">
+                        <!--
+
+                        Exemplo:
+
+                        <button class="btn-pagina">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+
+                        <button class="btn-pagina ativo">
+                            1
+                        </button>
+
+                        <button class="btn-pagina">
+                            2
+                        </button>
+
+                        <button class="btn-pagina">
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+
+                        -->
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JavaScript do menu -->
+
+    <script src="menu.js"></script>
+
+    <!-- Futuro JavaScript da tela -->
+
+    <script src="Imoveis.js"></script>
+
+</body>
+</html>
+

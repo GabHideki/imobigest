@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+:root{
+    --branco:#FFFFFF;
+    --azul-escuro:#2F3D7E;
+    --azul-claro:#566CD2;
+    --laranja:#EE7D39;
+    --cinza:#A4A4A4;
+    --cinza-claro:#A4A4A447;
+    --verde-escuro:#007C73;
+    --verde-claro:#C9E3E1;
+    --vermelho-escuro:#C93429;
+    --vermelho-claro:#C93429;
+}
+
+/* Estrutura */
+body{
+    background-color: var(--branco);
+}
+
+main{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Card */
+.card-login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+    max-width: 500px;
+    min-width: 420px;
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--cinza-claro);
+    background-color: var(--branco);
+}
+
+/* Logo */
+.logo-login{
+    margin-bottom: 10px;
+}
+
+.logo-login img{
+    display: block;
+    width: 90px;
+    height: auto;
+}
+
+/* Informações */
+
+.login-info{
+    text-align: center;
+    margin: 25px 0;
+}
+
+.login-info h2{
+    font-size: 32px;
+    color: var(--azul-escuro);
+    margin-bottom: 5px;
+}
+
+.login-info p{
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--cinza);
+}
+
+/* Formulário */
+form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 350px;
+}
+
+/* Labels */
+.form-email label,
+.form-password label{
+    display: block;
+    margin-bottom: 6px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    color: var(--azul-escuro);
+}
+
+.form-email{
+    margin-bottom: 15px;
+}
+
+.form-password{
+    margin-bottom: 5px;
+}
+
+/* Inputs */
+.form-email input,
+.form-password input{
+    width: 100%;
+    padding: 12px 10px;
+    font-size: 14px;
+    background-color: color-mix(in srgb, var(--cinza-claro) 40%, #fff);
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    transition: .2s;
+}
+
+.form-email input:focus,
+.form-password input:focus{
+    box-shadow: 0 0 0 2px rgba(86,108,210,.18);
+}
+
+/* Esqueceu senha */
+
+.esqueceu-senha{
+    text-align: right;
+    margin-top: 4px;
+    margin-bottom: 20px;
+}
+
+.esqueceu-senha a{
+    font-size: 12px;
+    color: var(--cinza);
+    text-decoration: none;
+}
+
+.esqueceu-senha a:hover{
+    color: var(--azul-escuro);
+}
+
+/* Mensagem de login */
+#mensagem-login{
+    min-height: 18px;
+    font-size: 13px;
+    text-align: center;
+    color: var(--vermelho-escuro);
+    margin-bottom: 15px;
+}
+
+/* Divider */
+.divider{
+    border: none;
+    height: 1px;
+    background-color: #000;
+    opacity: .1;
+    margin-bottom: 25px;
+}
+
+/* Botão */
+.btn-submit{
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn-submit:hover{
+    background-color: var(--azul-claro);
+}
