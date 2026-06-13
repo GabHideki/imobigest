@@ -4,6 +4,7 @@
  */
 package br.com.imobigest.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -14,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,7 +42,9 @@ public class Contrato {
     @Enumerated(EnumType.STRING)
     private StatusContrato status;
     
-    private int prazoContrato;
+    private Integer prazoMeses;
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
     
     @Enumerated(EnumType.STRING)
     private TipoContrato tipo;
@@ -57,7 +61,7 @@ public class Contrato {
     @JoinColumn(name = "imovel_id")
     private Imovel imovel;
     
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "contrato_id")
     private List<Pagamento> pagamentos;
 }

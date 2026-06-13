@@ -4,6 +4,7 @@
  */
 package br.com.imobigest.controller;
 
+import br.com.imobigest.model.TipoUsuario;
 import br.com.imobigest.model.Usuario;
 import br.com.imobigest.repository.UsuarioRepository;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -103,7 +105,6 @@ public class UsuarioController {
         antigo.setEmail(usuario.getEmail());
         antigo.setTelefone(usuario.getTelefone());
         antigo.setTipo(usuario.getTipo());
-        antigo.setEndereco(usuario.getEndereco());
         
         return repository.save(antigo);
     }
@@ -130,5 +131,25 @@ public class UsuarioController {
         }
 
         return usuario;
+    }
+    
+    @GetMapping("/clientes")
+    public List<Usuario> listarClientes() {
+        return repository.findByTipo(TipoUsuario.CLIENTE);
+    }
+    
+    @GetMapping("/corretores")
+    public List<Usuario> listarCorretores() {
+        return repository.findByTipo(TipoUsuario.CORRETOR);
+    }
+    
+    @GetMapping("/admins")
+    public List<Usuario> listarAdmins() {
+        return repository.findByTipo(TipoUsuario.ADMIN);
+    }
+    
+    @GetMapping("/buscar")
+    public List<Usuario> buscar(@RequestParam String nome) {
+        return repository.findByNomeContainingIgnoreCase(nome);
     }
 }

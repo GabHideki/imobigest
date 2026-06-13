@@ -12,8 +12,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,8 +46,4 @@ public class Usuario {
     
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipo;
-    
-    @OneToOne
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
 }
