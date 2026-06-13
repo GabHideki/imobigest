@@ -4,6 +4,8 @@
  */
 package br.com.imobigest.model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,8 +36,10 @@ public class Imovel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descricao;
-    private double valorCompra;
-    private double valorAluguel;
+    @Column(precision = 12, scale = 2)
+    private BigDecimal valorCompra;
+    @Column(precision = 12, scale = 2)
+    private BigDecimal valorAluguel;
     
     @Enumerated(EnumType.STRING)
     private StatusImovel status;
@@ -42,7 +47,7 @@ public class Imovel {
     @Enumerated(EnumType.STRING)
     private TipoImovel tipo;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 }

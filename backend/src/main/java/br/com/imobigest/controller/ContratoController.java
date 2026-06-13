@@ -61,7 +61,7 @@ public class ContratoController {
         
         // Atualiza os campos com as novas informações vindas da requisição
         antigo.setStatus(contrato.getStatus());
-        antigo.setPrazoContrato(contrato.getPrazoContrato());
+        antigo.setPrazoMeses(contrato.getPrazoMeses());
         antigo.setTipo(contrato.getTipo());
         antigo.setCliente(contrato.getCliente());
         antigo.setCorretor(contrato.getCorretor());
