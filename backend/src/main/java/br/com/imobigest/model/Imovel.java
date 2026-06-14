@@ -35,6 +35,7 @@ public class Imovel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String nome;
     private String descricao;
     @Column(precision = 12, scale = 2)
     private BigDecimal valorCompra;

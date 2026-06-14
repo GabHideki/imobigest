@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnSair) {
         btnSair.addEventListener('click', () => {
             if (confirm('Deseja realmente sair do sistema?')) {
-                localStorage.clear();
+                localStorage.removeItem('usuarioLogado');
                 window.location.href = '/login.html'; // Redireciona para a tela de login
             }
         });

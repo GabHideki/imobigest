@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let email = document.getElementById('email').value;
             let password = document.getElementById('password').value;
 
-            console.log(email, password);
-
             try {
                 const response = await fetch(
                     'http://localhost:8080/usuarios/login',

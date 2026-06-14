@@ -81,9 +81,9 @@
                         <label for="status">Status</label>
                         <select id="status" name="status" required>
                             <option value="">Selecione</option>
-                            <option value="disponivel">Disponível</option>
-                            <option value="alugado">Alugado</option>
-                            <option value="vendido">Vendido</option>
+                            <option value="DISPONIVEL">Disponível</option>
+                            <option value="ALUGADO">Alugado</option>
+                            <option value="VENDIDO">Vendido</option>
                         </select>
                     </div>
 
@@ -91,9 +91,9 @@
                         <label for="finalidade">Finalidade</label>
                         <select id="finalidade" name="finalidade" required>
                             <option value="">Selecione</option>
-                            <option value="aluguel">Aluguel</option>
-                            <option value="venda">Venda</option>
-                            <option value="ambos">Ambos</option>
+                            <option value="ALUGUEL">Aluguel</option>
+                            <option value="VENDA">Venda</option>
+                            <option value="AMBOS">Ambos</option>
                         </select>
                     </div>
 
@@ -113,8 +113,10 @@
                     </div>
 
                     <div class="btn">
-                        <button type="submit">Cadastrar</button>
+                        <button type="submit" id="btnCadastrar">Cadastrar</button>
                     </div>
+
+                    <div id = 'mensagem-cadastro'></div>
 
                 </form>
 
@@ -124,7 +126,7 @@
 
     </div>
 
-    <script src="cadastroImovel.js"></script>
+    <script src="js/cadastroImovel.js"></script>
 
 </body>
 
