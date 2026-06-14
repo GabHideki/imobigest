@@ -4,6 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const btnCadastro = document.getElementById('btnCadastrar');
+    const btnCancelar = document.getElementById('btnCancelar');
+
+    if(btnCancelar){
+        btnCancelar.addEventListener('click', () =>{
+            window.location.href = '/cliente.html';
+        })
+    }
 
     if(btnCadastro){
         btnCadastro.addEventListener('click', async (event) =>{
