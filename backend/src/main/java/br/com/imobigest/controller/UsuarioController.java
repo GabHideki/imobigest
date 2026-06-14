@@ -118,7 +118,7 @@ public class UsuarioController {
     @PostMapping("/login")
     public Usuario login(@RequestBody Usuario dados) {
 
-        Usuario usuario = repository.findByUsuario(dados.getUsuario())
+        Usuario usuario = repository.findByEmail(dados.getEmail())
                 .orElseThrow(() ->
                         new ResponseStatusException(
                                 HttpStatus.UNAUTHORIZED,
