@@ -4,12 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes</title>
+    <title>Usuarios</title>
 
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-    <!-- CSS -->
     <link rel="stylesheet" href="tabelas.css">
 </head>
 
@@ -17,17 +15,14 @@
     
     <main>
 
-        <!--MENU LATERAL-->
         <aside class="menu" id="menu">
 
-            <!-- Botão hambúrguer -->
             <div class="topo-menu">
                 <button id="btn-menu" class="btn-menu" type="button" aria-label="Abrir ou fechar menu">
                     <i class="bi bi-list"></i>
                 </button>
             </div>
 
-            <!-- Navegação -->
             <nav>
 
                 <ul>
@@ -39,9 +34,9 @@
                     </li>
 
                     <li>
-                        <a href="/cliente.html">
+                        <a href="/usuario.html">
                             <i class="bi bi-people"></i>
-                            <span>Clientes</span>
+                            <span>Usuarios</span>
                         </a>
                     </li>
 
@@ -69,7 +64,6 @@
 
             </nav>  
 
-            <!-- Rodapé do menu -->
             <div class="menu-footer">
                 <button id="btn-sair" class="btn-sair" type="button">
                     <i class="bi bi-box-arrow-right"></i>
@@ -78,30 +72,32 @@
             </div>
         </aside>
 
-        <!--CONTEÚDO -->
         <section class="conteudo">
-            <h1>Clientes</h1>
+            <h1>Usuarios</h1>
 
             <div class="tabela">
-                <!-- Barra superior -->
                 <div class="container-busca">
                     <div class="grupo-busca">
                         <div class="busca">
-                            <input id="buscar" class="input-busca" type="text" placeholder="Buscar cliente...">
+                            <input id="buscar" class="input-busca" type="text" placeholder="Buscar usuario...">
                         </div>
 
                         <div class="filtro">
                             <select id="filtro" class="select-filtro">
-                                <option value="todos">
+                                <option value="">
                                     Todos
                                 </option>
 
-                                <option value="ativos">
-                                    Ativos
+                                <option value="clientes">
+                                    Clientes
                                 </option>
 
-                                <option value="inativos">
-                                    Inativos
+                                <option value="corretores">
+                                    Corretores
+                                </option>
+
+                                <option value="admins">
+                                    Admins
                                 </option>
                             </select>
                         </div>
@@ -109,11 +105,10 @@
 
                     <button id="btn-adicionar-cliente" class="btn-adicionar" type="button">
                         <i class="bi bi-plus-lg"></i>
-                        Cliente
+                        Usuario
                     </button>
                 </div>
 
-                <!-- Tabela -->
                 <table>
                     <thead>
                         <tr>
@@ -121,46 +116,21 @@
                             <th>CPF</th>
                             <th>E-mail</th>
                             <th>Telefone</th>
-                            <th>Status</th>
-                            <th>Ações</th>
+                            <th>Tipo</th> <th>Ações</th>
                         </tr>
                     </thead>
-
-                    <!--O JavaScript preencherá este tbody. Os dados virão do backend.-->
 
                     <tbody id="listaClientes">
                     </tbody>
                 </table>
 
-                <!-- Paginação -->
                 <div class="rodape-tabela">
                     <span id="textoPaginacao">
-                        Mostrando 0 de 0 clientes
+                        Mostrando 0 de 0 usuarios
                     </span>
 
                     <div id="pg" class="paginacao">
-                        <!--
-
-                        Exemplo:
-
-                        <button class="btn-pagina">
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
-
-                        <button class="btn-pagina ativo">
-                            1
-                        </button>
-
-                        <button class="btn-pagina">
-                            2
-                        </button>
-
-                        <button class="btn-pagina">
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
-
-                        -->
-                    </div>
+                        </div>
 
                 </div>
 
@@ -170,14 +140,9 @@
 
     </main>
 
-    <!-- JavaScript do menu -->
-
     <script src="js/menu.js"></script>
 
-    <!-- Futuro JavaScript da tela -->
-
-    <script src="js/clientes.js"></script>
+    <script src="js/usuarios.js"></script>
 
 </body>
 </html>
-

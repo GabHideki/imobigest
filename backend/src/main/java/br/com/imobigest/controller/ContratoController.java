@@ -10,6 +10,7 @@ import br.com.imobigest.repository.ContratoRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,8 +33,17 @@ public class ContratoController {
     
     // Listar todos os contratos
     @GetMapping
-    public List<Contrato> listar(){
-        return repository.findAll();
+    public ResponseEntity<List<Contrato>> listarOuBuscar(@RequestParam(value = "busca", required = false) String busca) {
+        List<Contrato> resultados;
+
+        // Faz a verificação direto aqui no Controller
+        if (busca == null || busca.trim().isEmpty()) {
+            resultados = repository.findAll(); // Traz tudo se o campo estiver vazio
+        } else {
+            resultados = repository.findByClienteNomeContainingIgnoreCase(busca.trim()); // Busca por nome do cliente
+        }
+
+        return ResponseEntity.ok(resultados);
     }
     
     // Adicionar contratos

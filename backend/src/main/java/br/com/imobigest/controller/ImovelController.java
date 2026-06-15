@@ -6,6 +6,7 @@
 package br.com.imobigest.controller;
 
 import br.com.imobigest.model.Imovel;
+import br.com.imobigest.model.StatusImovel;
 import br.com.imobigest.repository.ImovelRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -73,5 +75,25 @@ public class ImovelController {
     public void delete(@PathVariable Long id) {
         Imovel imovel = read(id);
         repository.delete(imovel);
+    }
+    
+    @GetMapping("/disponiveis")
+    public List<Imovel> listarDisponiveis(){
+        return repository.findByStatus(StatusImovel.DISPONIVEL);
+    }
+    
+    @GetMapping("/alugados")
+    public List<Imovel> listarAlugados(){
+        return repository.findByStatus(StatusImovel.ALUGADO);
+    }
+    
+    @GetMapping("/vendidos")
+    public List<Imovel> listarVendidos(){
+        return repository.findByStatus(StatusImovel.VENDIDO);
+    }
+    
+    @GetMapping("/buscar")
+    public List<Imovel> buscar(@RequestParam String nome) {
+        return repository.findByNomeContainingIgnoreCase(nome);
     }
 }

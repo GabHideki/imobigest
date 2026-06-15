@@ -38,19 +38,19 @@ public class UsuarioController {
     @PostMapping
     public Usuario create(@RequestBody Usuario usuario){
         
-        if(repository.findByUsuario(usuario.getUsuario()).isPresent()){
+        if(usuario.getUsuario() != null && repository.findByUsuario(usuario.getUsuario()).isPresent()){
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
                     "Usuário já cadastrado");
         }
         
-        if(repository.findByCpf(usuario.getCpf()).isPresent()){
+        if(usuario.getCpf() != null && repository.findByCpf(usuario.getCpf()).isPresent()){
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
                     "CPF já cadastrado");
         }
         
-        if(repository.findByEmail(usuario.getEmail()).isPresent()){
+        if(usuario.getEmail() != null && repository.findByEmail(usuario.getEmail()).isPresent()){
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
                     "Email já cadastrado");

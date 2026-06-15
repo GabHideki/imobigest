@@ -5,6 +5,8 @@
 package br.com.imobigest.repository;
 
 import br.com.imobigest.model.Imovel;
+import br.com.imobigest.model.StatusImovel;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -12,5 +14,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author ghide
  */
 public interface ImovelRepository extends JpaRepository<Imovel, Long> {
-    
+    List<Imovel> findByStatus(StatusImovel status);
+    List<Imovel> findByNomeContainingIgnoreCase(String nome);
 }

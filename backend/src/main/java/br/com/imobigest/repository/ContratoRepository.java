@@ -5,6 +5,8 @@
 package br.com.imobigest.repository;
 
 import br.com.imobigest.model.Contrato;
+import br.com.imobigest.model.StatusContrato;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -12,5 +14,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author ghide
  */
 public interface ContratoRepository extends JpaRepository<Contrato, Long> {
-    
+    List<Contrato> findByStatus(StatusContrato status);
+    List<Contrato> findByClienteNomeContainingIgnoreCase(String nomeCliente);
 }

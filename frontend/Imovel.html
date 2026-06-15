@@ -40,9 +40,9 @@
                     </li>
 
                     <li>
-                        <a href="/cliente.html">
+                        <a href="/usuario.html">
                             <i class="bi bi-people"></i>
-                            <span>Clientes</span>
+                            <span>Usuarios</span>
                         </a>
                     </li>
 
@@ -88,21 +88,25 @@
                 <div class="container-busca">
                     <div class="grupo-busca">
                         <div class="busca">
-                            <input id="buscar" class="input-busca" type="text" placeholder="Buscar cliente...">
+                            <input id="buscar" class="input-busca" type="text" placeholder="Buscar imóvel...">
                         </div>
 
                         <div class="filtro">
                             <select id="filtro" class="select-filtro">
-                                <option value="todos">
+                                <option value="">
                                     Todos
                                 </option>
 
-                                <option value="ativos">
+                                <option value="disponiveis">
                                     Disponíveis
                                 </option>
 
-                                <option value="inativos">
-                                    Indisponíveis
+                                <option value="alugados">
+                                    Alugados
+                                </option>
+
+                                <option value="vendidos">
+                                    Vendidos
                                 </option>
                             </select>
                         </div>
@@ -118,7 +122,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Nome</th>
                             <th>Endereço</th>
                             <th>Tipo</th>
                             <th>Status</th>
@@ -138,7 +142,7 @@
                 <!-- Paginação -->
                 <div class="rodape-tabela">
                     <span id="textoPaginacao">
-                        Mostrando 0 de 0 clientes
+                        Mostrando 0 de 0 imóveis
                     </span>
 
                     <div id="pg" class="paginacao">
