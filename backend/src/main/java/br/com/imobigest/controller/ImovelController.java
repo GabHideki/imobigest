@@ -59,7 +59,7 @@ public class ImovelController {
         
         Imovel antigo = read(id);
 
-        
+        antigo.setNome(imovel.getNome());
         antigo.setDescricao(imovel.getDescricao());
         antigo.setValorCompra(imovel.getValorCompra());
         antigo.setValorAluguel(imovel.getValorAluguel());
