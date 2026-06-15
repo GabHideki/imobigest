@@ -1,3 +1,6 @@
+let contratoId = null;
+let isCorretor = false;
+
 document.addEventListener('DOMContentLoaded', async () => {
     const usuarioLogadoTexto = localStorage.getItem('usuarioLogado');
     if (!usuarioLogadoTexto) {
@@ -6,11 +9,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const usuarioLogado = JSON.parse(usuarioLogadoTexto);
+    const tipoLogado = usuarioLogado.tipo ? usuarioLogado.tipo.toUpperCase() : '';
+    isCorretor = tipoLogado === 'CORRETOR';
 
     await carregarClientes();
     await carregarImoveis();
-    
     await configurarCampoCorretor(usuarioLogado);
+
+    const params = new URLSearchParams(window.location.search);
+    contratoId = params.get('id');
+
+    if (contratoId) {
+        await carregarContratoParaEdicao(contratoId);
+        const botaoSubmit = document.querySelector('#formContrato button[type="submit"]');
+        if (botaoSubmit) {
+            botaoSubmit.textContent = 'Salvar alterações';
+        }
+    }
 
     const selectImovel = document.getElementById('imovelId');
     if (selectImovel) {
@@ -32,6 +47,43 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 });
+
+async function carregarContratoParaEdicao(id) {
+    try {
+        const response = await fetch(`http://localhost:8080/contratos/${id}`);
+        if (!response.ok) {
+            throw new Error(`Contrato não encontrado: ${response.status}`);
+        }
+
+        const contrato = await response.json();
+
+        document.getElementById('statusContrato').value = contrato.status || '';
+        document.getElementById('tipoContrato').value = contrato.tipo || '';
+        document.getElementById('prazoContrato').value = contrato.prazoMeses || '';
+        document.getElementById('dataInicio').value = contrato.dataInicio || '';
+        document.getElementById('dataFim').value = contrato.dataFim || '';
+        document.getElementById('clienteId').value = contrato.cliente?.id || '';
+        document.getElementById('imovelId').value = contrato.imovel?.id || '';
+
+        if (contrato.corretor?.id) {
+            const corretorId = document.getElementById('corretorId');
+            if (corretorId) {
+                corretorId.value = contrato.corretor.id;
+            }
+        }
+
+        if (contrato.pagamentos && contrato.pagamentos.length > 0) {
+            const pagamento = contrato.pagamentos[contrato.pagamentos.length - 1];
+            document.getElementById('valorPagamento').value = pagamento.valor ?? '';
+            document.getElementById('dataPagamento').value = pagamento.data || '';
+            document.getElementById('tipoPagamento').value = pagamento.tipo || '';
+            document.getElementById('statusPagamento').value = pagamento.status || '';
+        }
+    } catch (error) {
+        console.error('Erro ao carregar contrato para edição:', error);
+        alert('Não foi possível carregar os dados do contrato para edição.');
+    }
+}
 
 async function configurarCampoCorretor(usuarioLogado) {
     const container = document.getElementById('containerCorretor');
@@ -165,8 +217,14 @@ async function salvarContrato() {
             ]
         };
 
-        const response = await fetch('http://localhost:8080/contratos', {
-            method: 'POST',
+        const url = contratoId
+            ? `http://localhost:8080/contratos/${contratoId}`
+            : 'http://localhost:8080/contratos';
+
+        const method = contratoId ? 'PUT' : 'POST';
+
+        const response = await fetch(url, {
+            method,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -175,7 +233,8 @@ async function salvarContrato() {
 
         if (!response.ok) throw new Error(`Erro: ${response.status}`);
 
-        alert('Contrato cadastrado com sucesso!');
+        const mensagem = contratoId ? 'Contrato atualizado com sucesso!' : 'Contrato cadastrado com sucesso!';
+        alert(mensagem);
         window.location.href = '/contrato.html';
 
     } catch (error) {

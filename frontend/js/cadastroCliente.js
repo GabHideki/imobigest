@@ -71,8 +71,10 @@ function obterNomePerfilAmigavel(tipo) {
     return 'Cliente';
 }
 
+let usuarioId = null;
+let isCorretor = false;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const usuarioLogadoTexto = localStorage.getItem('usuarioLogado');
     
     if (!usuarioLogadoTexto) {
@@ -80,8 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    const params = new URLSearchParams(window.location.search);
+    usuarioId = params.get('id');
+
     const usuarioLogado = JSON.parse(usuarioLogadoTexto);
-    const tipoLogado = usuarioLogado.tipo ? usuarioLogado.tipo.toUpperCase() : "CORRETOR";
+    const tipoLogado = usuarioLogado.tipo ? usuarioLogado.tipo.toUpperCase() : '';
+    isCorretor = tipoLogado === 'CORRETOR';
 
     configurarInterfacePorPerfil(tipoLogado);
 
@@ -96,6 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
         btnFechar.addEventListener('click', () => voltarParaListagem(tipoLogado));
     }
 
+    if (usuarioId) {
+        await carregarUsuarioParaEdicao(usuarioId);
+        btnCadastro.textContent = 'Salvar alterações';
+    }
+
     if (btnCadastro) {
         const formCadastro = document.getElementById('formCadastro');
         formCadastro.addEventListener('submit', async (event) => {
@@ -103,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             btnCadastro.disabled = true;
             const textoOriginalBotao = btnCadastro.textContent;
-            btnCadastro.textContent = 'Cadastrando...';
+            btnCadastro.textContent = usuarioId ? 'Salvando...' : 'Cadastrando...';
 
             let nome = document.getElementById('nome').value;
             let cpf = document.getElementById('cpf').value;
@@ -136,8 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                const response = await fetch('http://localhost:8080/usuarios', {
-                    method: 'POST',
+                const url = usuarioId ? `http://localhost:8080/usuarios/${usuarioId}` : 'http://localhost:8080/usuarios';
+                const method = usuarioId ? 'PUT' : 'POST';
+
+                const response = await fetch(url, {
+                    method,
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -169,3 +183,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+async function carregarUsuarioParaEdicao(id) {
+    try {
+        const response = await fetch(`http://localhost:8080/usuarios/${id}`);
+        if (!response.ok) {
+            throw new Error(`Usuário não encontrado: ${response.status}`);
+        }
+
+        const usuario = await response.json();
+
+        if (isCorretor && String(usuario.tipo || '').toUpperCase() !== 'CLIENTE') {
+            alert('Corretor só pode editar clientes.');
+            window.location.href = '/usuario.html';
+            return;
+        }
+
+        document.getElementById('nome').value = usuario.nome || '';
+        document.getElementById('cpf').value = usuario.cpf || '';
+        document.getElementById('tell').value = usuario.telefone || '';
+        document.getElementById('email').value = usuario.email || '';
+
+        const selectTipo = document.getElementById('tipo');
+        if (selectTipo) {
+            selectTipo.value = usuario.tipo || 'CLIENTE';
+            selectTipo.dispatchEvent(new Event('change'));
+        }
+
+        const loginInput = document.getElementById('usuarioLogin');
+        if (loginInput) {
+            loginInput.value = usuario.usuario || usuario.login || '';
+        }
+
+        document.getElementById('senhaLogin').value = '';
+    } catch (error) {
+        console.error('Erro ao carregar usuário para edição:', error);
+        exibirMensagem('Não foi possível carregar os dados do usuário para edição.', false);
+    }
+}

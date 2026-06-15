@@ -1,9 +1,20 @@
+let isCorretor = false;
+
+function obterUsuarioLogado() {
+    const usuarioLogadoTexto = localStorage.getItem('usuarioLogado');
+    return usuarioLogadoTexto ? JSON.parse(usuarioLogadoTexto) : null;
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
 
     if (!localStorage.getItem('usuarioLogado')) {
         window.location.href = '/login.html';
         return;
     }
+
+    const usuarioLogado = obterUsuarioLogado();
+    const tipoLogado = usuarioLogado?.tipo ? usuarioLogado.tipo.toUpperCase() : '';
+    isCorretor = tipoLogado === 'CORRETOR';
 
     const selectFiltro = document.getElementById('filtro');
     const inputBusca = document.getElementById('buscar');
@@ -36,6 +47,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const todosImoveis = await buscarImoveis("", "");
     mostrarImoveis(todosImoveis);
+
+    const btnAdicionarImovel = document.getElementById('btn-adicionar-cliente');
+    if (btnAdicionarImovel) {
+        btnAdicionarImovel.addEventListener('click', () => {
+            window.location.href = '/formImovel.html';
+        });
+    }
 });
 
 async function buscarImoveis(nome, status) {
@@ -98,6 +116,15 @@ function mostrarImoveis(imoveis) {
         const statusTexto = imovel.status ? String(imovel.status) : 'INDISPONIVEL';
         const tipoTexto = imovel.tipo ? String(imovel.tipo) : 'N/A';
 
+        const acoesImovel = `
+            <button class="btn-acao editar" title="Editar Imóvel" onclick="editarImovel(${imovel.id})">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn-acao deletar" title="Excluir Imóvel" onclick="deletarImovel(${imovel.id})">
+                <i class="bi bi-trash"></i>
+            </button>
+        `;
+
         tr.innerHTML = `
             <td>${imovel.nome || 'N/A'}</td>
             <td>${enderecoCompleto}</td>
@@ -108,12 +135,7 @@ function mostrarImoveis(imoveis) {
                 </span>
             </td>
             <td>
-                <button class="btn-acao editar" title="Editar Imóvel" onclick="editarImovel(${imovel.id})">
-                    <i class="bi bi-pencil"></i>
-                </button>
-                <button class="btn-acao deletar" title="Excluir Imóvel" onclick="deletarImovel(${imovel.id})">
-                    <i class="bi bi-trash"></i>
-                </button>
+                ${acoesImovel}
             </td>
         `;
 
@@ -122,5 +144,34 @@ function mostrarImoveis(imoveis) {
 
     if (textoPaginacao) {
         textoPaginacao.textContent = `Mostrando ${imoveis.length} de ${imoveis.length} imóveis`;
+    }
+}
+
+function editarImovel(id) {
+    window.location.href = `/formImovel.html?id=${id}`;
+}
+
+async function deletarImovel(id) {
+    const confirmar = confirm('Deseja realmente excluir este imóvel?');
+    if (!confirmar) return;
+
+    try {
+        const response = await fetch(`http://localhost:8080/imoveis/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao excluir imóvel: ${response.status}`);
+        }
+
+        alert('Imóvel excluído com sucesso.');
+
+        const termoBusca = document.getElementById('buscar')?.value || '';
+        const statusSelecionado = document.getElementById('filtro')?.value || '';
+        const imoveis = await buscarImoveis(termoBusca, statusSelecionado);
+        mostrarImoveis(imoveis);
+    } catch (error) {
+        console.error('Erro ao excluir imóvel:', error);
+        alert('Não foi possível excluir o imóvel. Tente novamente.');
     }
 }
