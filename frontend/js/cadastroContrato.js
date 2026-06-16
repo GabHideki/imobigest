@@ -185,43 +185,104 @@ async function atualizarValorSugerido(idImovel) {
 
 async function salvarContrato() {
     try {
-        const idCorretor = document.getElementById('corretorId').value;
+        // Validação de campos obrigatórios
+        const statusContrato = document.getElementById('statusContrato').value.trim();
+        const tipoContrato = document.getElementById('tipoContrato').value.trim();
+        const prazoContrato = document.getElementById('prazoContrato').value.trim();
+        const dataInicio = document.getElementById('dataInicio').value.trim();
+        const dataFim = document.getElementById('dataFim').value.trim();
+        const clienteId = document.getElementById('clienteId').value.trim();
+        const imovelId = document.getElementById('imovelId').value.trim();
+        const idCorretor = document.getElementById('corretorId').value.trim();
+        const valorPagamento = document.getElementById('valorPagamento').value.trim();
+        const dataPagamento = document.getElementById('dataPagamento').value.trim();
+        const tipoPagamento = document.getElementById('tipoPagamento').value.trim();
+        const statusPagamento = document.getElementById('statusPagamento').value.trim();
 
-        if (!idCorretor) {
+        // Validações
+        if (!statusContrato) {
+            alert("Por favor, selecione o status do contrato.");
+            return;
+        }
+        if (!tipoContrato) {
+            alert("Por favor, selecione o tipo do contrato.");
+            return;
+        }
+        if (!prazoContrato || isNaN(prazoContrato) || parseInt(prazoContrato) <= 0) {
+            alert("Por favor, insira um prazo válido (maior que 0).");
+            return;
+        }
+        if (!dataInicio) {
+            alert("Por favor, insira a data de início.");
+            return;
+        }
+        if (!dataFim) {
+            alert("Por favor, insira a data de fim.");
+            return;
+        }
+        if (!clienteId || isNaN(clienteId)) {
+            alert("Por favor, selecione um cliente válido.");
+            return;
+        }
+        if (!imovelId || isNaN(imovelId)) {
+            alert("Por favor, selecione um imóvel válido.");
+            return;
+        }
+        if (!idCorretor || isNaN(idCorretor)) {
             alert("Por favor, selecione ou verifique o corretor responsável.");
+            return;
+        }
+        if (!valorPagamento || isNaN(valorPagamento) || parseFloat(valorPagamento) <= 0) {
+            alert("Por favor, insira um valor de pagamento válido.");
+            return;
+        }
+        if (!dataPagamento) {
+            alert("Por favor, insira a data do pagamento.");
+            return;
+        }
+        if (!tipoPagamento) {
+            alert("Por favor, selecione o tipo de pagamento.");
+            return;
+        }
+        if (!statusPagamento) {
+            alert("Por favor, selecione o status do pagamento.");
             return;
         }
 
         const contratoPayload = {
-            status: document.getElementById('statusContrato').value.toUpperCase(),
-            prazoMeses: parseInt(document.getElementById('prazoContrato').value),
-            dataInicio: document.getElementById('dataInicio').value,
-            dataFim: document.getElementById('dataFim').value,
-            tipo: document.getElementById('tipoContrato').value.toUpperCase(),
+            status: statusContrato,
+            prazoMeses: parseInt(prazoContrato),
+            dataInicio: dataInicio,
+            dataFim: dataFim,
+            tipo: tipoContrato.toUpperCase(),
             cliente: {
-                id: document.getElementById('clienteId').value
+                id: parseInt(clienteId)
             },
             corretor: {
-                id: idCorretor
+                id: parseInt(idCorretor)
             },
             imovel: {
-                id: document.getElementById('imovelId').value
+                id: parseInt(imovelId)
             },
             pagamentos: [
                 {
-                    valor: parseFloat(document.getElementById('valorPagamento').value),
-                    data: document.getElementById('dataPagamento').value,
-                    tipo: document.getElementById('tipoPagamento').value.toUpperCase(),
-                    status: document.getElementById('statusPagamento').value.toUpperCase()
+                    valor: parseFloat(valorPagamento),
+                    data: dataPagamento,
+                    tipo: tipoPagamento,
+                    status: statusPagamento
                 }
             ]
         };
+
+        console.log('Payload a ser enviado:', JSON.stringify(contratoPayload, null, 2));
 
         const url = contratoId
             ? `http://localhost:8080/contratos/${contratoId}`
             : 'http://localhost:8080/contratos';
 
         const method = contratoId ? 'PUT' : 'POST';
+
+        console.log(`Enviando ${method} para ${url}`);
 
         const response = await fetch(url, {
             method,
@@ -231,7 +292,20 @@ async function salvarContrato() {
             body: JSON.stringify(contratoPayload)
         });
 
-        if (!response.ok) throw new Error(`Erro: ${response.status}`);
+        if (!response.ok) {
+            const errorBody = await response.text();
+            console.error('Resposta do servidor:', errorBody);
+            
+            // Tenta fazer parse de JSON se possível
+            try {
+                const jsonError = JSON.parse(errorBody);
+                console.error('Erro formatado:', jsonError);
+            } catch (e) {
+                console.error('Resposta bruta:', errorBody);
+            }
+            
+            throw new Error(`Erro: ${response.status}`);
+        }
 
         const mensagem = contratoId ? 'Contrato atualizado com sucesso!' : 'Contrato cadastrado com sucesso!';
         alert(mensagem);
@@ -239,6 +313,6 @@ async function salvarContrato() {
 
     } catch (error) {
         console.error('Erro ao salvar contrato:', error);
-        alert('Erro ao cadastrar o contrato. Verifique os dados.');
+        alert('Erro ao salvar o contrato. Verifique os dados e tente novamente.');
     }
 }
