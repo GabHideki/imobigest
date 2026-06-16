@@ -80,7 +80,6 @@ async function carregarContratoParaEdicao(id) {
             document.getElementById('statusPagamento').value = pagamento.status || '';
         }
     } catch (error) {
-        console.error('Erro ao carregar contrato para edição:', error);
         alert('Não foi possível carregar os dados do contrato para edição.');
     }
 }
@@ -122,7 +121,6 @@ async function carregarListaDeCorretores() {
             selectCorretor.appendChild(option);
         });
     } catch (error) {
-        console.error('Erro ao carregar corretores para o Admin:', error);
     }
 }
 
@@ -141,7 +139,6 @@ async function carregarClientes() {
             selectCliente.appendChild(option);
         });
     } catch (error) {
-        console.error('Erro ao popular lista de clientes:', error);
     }
 }
 
@@ -160,7 +157,6 @@ async function carregarImoveis() {
             selectImovel.appendChild(option);
         });
     } catch (error) {
-        console.error('Erro ao popular lista de imóveis:', error);
     }
 }
 
@@ -179,7 +175,6 @@ async function atualizarValorSugerido(idImovel) {
             inputValor.value = imovel.valorCompra;
         }
     } catch (error) {
-        console.error('Erro ao atualizar valor sugerido:', error);
     }
 }
 
@@ -274,15 +269,11 @@ async function salvarContrato() {
             ]
         };
 
-        console.log('Payload a ser enviado:', JSON.stringify(contratoPayload, null, 2));
-
         const url = contratoId
             ? `http://localhost:8080/contratos/${contratoId}`
             : 'http://localhost:8080/contratos';
 
         const method = contratoId ? 'PUT' : 'POST';
-
-        console.log(`Enviando ${method} para ${url}`);
 
         const response = await fetch(url, {
             method,
@@ -294,17 +285,7 @@ async function salvarContrato() {
 
         if (!response.ok) {
             const errorBody = await response.text();
-            console.error('Resposta do servidor:', errorBody);
-            
-            // Tenta fazer parse de JSON se possível
-            try {
-                const jsonError = JSON.parse(errorBody);
-                console.error('Erro formatado:', jsonError);
-            } catch (e) {
-                console.error('Resposta bruta:', errorBody);
-            }
-            
-            throw new Error(`Erro: ${response.status}`);
+            throw new Error(`Erro ao salvar o contrato. Código ${response.status}`);
         }
 
         const mensagem = contratoId ? 'Contrato atualizado com sucesso!' : 'Contrato cadastrado com sucesso!';
@@ -312,7 +293,6 @@ async function salvarContrato() {
         window.location.href = '/contrato.html';
 
     } catch (error) {
-        console.error('Erro ao salvar contrato:', error);
-        alert('Erro ao salvar o contrato. Verifique os dados e tente novamente.');
+        alert(error.message || 'Erro ao salvar o contrato. Verifique os dados e tente novamente.');
     }
 }

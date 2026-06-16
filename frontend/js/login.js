@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         })
                     }
                 );
-
-                console.log("Status:", response.status);
                 
                 if (!response.ok) {
                     let mensagemLogin = document.getElementById('mensagem-login');
@@ -53,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = '/contrato.html';
 
             } catch (error) {
-                console.error(error);
             }
         });
     }

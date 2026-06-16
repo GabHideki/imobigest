@@ -132,8 +132,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     })
                 });
 
-                console.log("Status:", response.status);
-
                 let mensagemCadastro = document.getElementById('mensagem-cadastro');
                 if (mensagemCadastro) {
                     mensagemCadastro.innerHTML = '';
@@ -157,7 +155,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 }
             } catch (error) {
-                console.error(error);
                 btnCadastro.disabled = false;
                 btnCadastro.textContent = textoOriginalBotao;
             }
@@ -194,7 +191,6 @@ async function carregarImovelParaEdicao(id) {
             document.getElementById('valorAluguel').value = imovel.valorAluguel;
         }
     } catch (error) {
-        console.error('Erro ao carregar imóvel para edição:', error);
         const mensagemCadastro = document.getElementById('mensagem-cadastro');
         if (mensagemCadastro) {
             mensagemCadastro.innerHTML = '<p>Não foi possível carregar os dados do imóvel para edição.</p>';

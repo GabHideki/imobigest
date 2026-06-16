@@ -95,9 +95,6 @@ async function buscarUsuarios(nome, perfil) {
 
         const response = await fetch(url);
 
-        console.log("URL chamada:", url);
-        console.log("Status da resposta:", response.status);
-
         if (!response.ok) {
             throw new Error(`Erro na requisição: ${response.status}`);
         }
@@ -120,7 +117,6 @@ async function buscarUsuarios(nome, perfil) {
         return usuarios;
 
     } catch (error) {
-        console.error("Erro ao buscar usuários:", error);
         return [];
     }
 }
@@ -194,7 +190,6 @@ async function deletarUsuario(id) {
         const usuarios = await buscarUsuarios(termoBusca, perfilSelecionado);
         mostrarUsuarios(usuarios);
     } catch (error) {
-        console.error('Erro ao excluir usuário:', error);
         alert('Não foi possível excluir o usuário. Tente novamente.');
     }
 }

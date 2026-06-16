@@ -72,9 +72,6 @@ async function buscarImoveis(nome, status) {
 
         const response = await fetch(url);
 
-        console.log("URL chamada:", url);
-        console.log("Status da resposta:", response.status);
-
         if (!response.ok) {
             throw new Error(`Erro na requisição: ${response.status}`);
         }
@@ -82,7 +79,6 @@ async function buscarImoveis(nome, status) {
         return await response.json();
 
     } catch (error) {
-        console.error("Erro ao buscar imóveis:", error);
         return [];
     }
 }
@@ -171,7 +167,6 @@ async function deletarImovel(id) {
         const imoveis = await buscarImoveis(termoBusca, statusSelecionado);
         mostrarImoveis(imoveis);
     } catch (error) {
-        console.error('Erro ao excluir imóvel:', error);
         alert('Não foi possível excluir o imóvel. Tente novamente.');
     }
 }

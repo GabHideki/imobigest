@@ -176,7 +176,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }, 1500);
                 }
             } catch (error) {
-                console.error(error);
                 btnCadastro.disabled = false;
                 btnCadastro.textContent = textoOriginalBotao;
             }
@@ -217,7 +216,6 @@ async function carregarUsuarioParaEdicao(id) {
 
         document.getElementById('senhaLogin').value = '';
     } catch (error) {
-        console.error('Erro ao carregar usuário para edição:', error);
         exibirMensagem('Não foi possível carregar os dados do usuário para edição.', false);
     }
 }

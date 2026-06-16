@@ -62,9 +62,6 @@ async function buscarContratos(termo, status) {
 
         const response = await fetch(url);
 
-        console.log("URL chamada:", url);
-        console.log("Status da resposta:", response.status);
-
         if (!response.ok) {
             throw new Error(`Erro na requisição dos contratos: ${response.status}`);
         }
@@ -80,7 +77,6 @@ async function buscarContratos(termo, status) {
         return dados;
 
     } catch (error) {
-        console.error("Erro ao buscar contratos:", error);
         return [];
     }
 }
@@ -178,7 +174,6 @@ async function deletarContrato(id) {
         const contratos = await buscarContratos(termoBusca);
         mostrarContratos(contratos);
     } catch (error) {
-        console.error('Erro ao excluir contrato:', error);
         alert('Não foi possível excluir o contrato. Tente novamente.');
     }
 }
