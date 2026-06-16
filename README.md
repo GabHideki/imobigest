@@ -4,14 +4,15 @@ Sistema de gestão imobiliária desenvolvido em Java como projeto acadêmico da 
 
 ## Funcionalidades
 
-- Login de Usuarios
-- Gerenciamento de usuários
-- Gerenciamento de imóveis
-- Gerenciamento de contratos
+- Autenticação de usuários
+- Cadastro e gerenciamento de usuários
+- Cadastro e gerenciamento de imóveis
+- Cadastro e gerenciamento de contratos
 
 ## Tecnologias Utilizadas
 
 ### Backend
+
 - Java
 - Maven
 - Spring Boot
@@ -21,82 +22,135 @@ Sistema de gestão imobiliária desenvolvido em Java como projeto acadêmico da 
 - Programação Orientada a Objetos (POO)
 
 ### Frontend
- - HTML
- - CSS
- - JavaScript
+
+- HTML
+- CSS
+- JavaScript
 
 ## Estrutura do Projeto
 
 ```text
-src/main/java/br/com/imobigest
-├── controller
-├── model
-└── repository
+imobigest/
+│
+├── backend/
+│   └── src/main/java/br/com/imobigest/
+│       ├── controller/
+│       ├── model/
+│       └── repository/
+│
+└── frontend/
+    ├── css/
+    ├── js/
+    ├── login.html
+    ├── usuario.html
+    ├── imovel.html
+    ├── contrato.html
+    ├── formCliente.html
+    ├── formImovel.html
+    └── formContrato.html
 ```
-```text
-imobigest
-├── backend
-│   ├── src/main/java/br/com/imobigest
-│   │   ├── controller
-│   │   ├── model
-│   │   └── repository
-│   │
-└── frontend
-│   ├── js
-│   ├── css
-│   └── 
-```
-
 
 ## Como Executar
 
 ### Pré-requisitos
 
 Antes de executar o sistema, certifique-se de possuir os seguintes softwares instalados:
+
 - Java JDK 17 ou superior
 - Apache Maven 3.9 ou superior
 - PostgreSQL 15 ou superior
 - pgAdmin 4
-- Live Server
+- Live Server (VS Code)
 
-1. Configuração do Banco de Dados
-   - Abra o pgAdmin4
-   - Conecte-se ao servidor PostgreSQL
-   - Clique com o botão direito em Databases
-   - Selecione: Create -> Database
-   - Coloque:
-     - Database: imobigest
-     - Owner: postgres
-    - Clique em Save
-2. Configuração do Backend\n
-  - Localize o arquivo:
+### 1. Configuração do Banco de Dados
+
+1. Abra o pgAdmin 4.
+2. Conecte-se ao servidor PostgreSQL.
+3. Clique com o botão direito em **Databases**.
+4. Selecione **Create → Database**.
+5. Configure:
+
+```text
+Database: imobigest
+Owner: postgres
+```
+
+6. Clique em **Save**.
+
+---
+
+### 2. Configuração do Backend
+
+Localize o arquivo:
+
 ```text
 backend/src/main/resources/application.properties
 ```
-  - Insira sua senha no campo "spring.datasource.password=" (Senha utilizada no pgAdmin4)
-  - Configure os dados do PostgreSQL:
-  ```text
-  spring.datasource.url=jdbc:postgresql://localhost:5432/imobigest
+
+Configure os dados do PostgreSQL:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/imobigest
 spring.datasource.username=postgres
 spring.datasource.password=sua_senha
 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
-  ```
-3. Iniciar API
-```bash
-cd backend
-mvn clean installmvn
-spring-boot:run
 ```
 
-4. Execução do Frontend
-- Acesse a pasta frontend e abra qualquer página utilizando o Live Server
+Substitua:
 
-5. Login Padrão para Testes
-- Email: admin@imobigest.com
-- Senha: admin123
+```text
+sua_senha
+```
+
+pela senha utilizada no PostgreSQL.
+
+---
+
+### 3. Iniciando a API
+
+Abra um terminal na pasta do backend:
+
+```bash
+cd backend
+```
+
+Compile o projeto:
+
+```bash
+mvn clean install
+```
+
+Inicie a aplicação:
+
+```bash
+mvn spring-boot:run
+```
+
+Após a inicialização, a API estará disponível em:
+
+```text
+http://localhost:8080
+```
+
+---
+
+### 4. Executando o Frontend
+
+1. Abra a pasta `frontend` no VS Code.
+2. Clique com o botão direito sobre `login.html`.
+3. Selecione **Open with Live Server**.
+
+---
+
+### 5. Login para Testes
+
+```text
+Email: admin@imobigest.com
+Senha: admin123
+```
 
 ## Autores
 
