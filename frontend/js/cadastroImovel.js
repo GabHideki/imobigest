@@ -1,4 +1,5 @@
 let imovelId = null;
+let enderecoId = null;
 let finalidade = null;
 let inputVenda = null;
 let inputAluguel = null;
@@ -121,6 +122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         valorCompra: campoVenda ? parseFloat(campoVenda) : null,
                         valorAluguel: campoAluguel ? parseFloat(campoAluguel) : null,
                         endereco: {
+                            id: enderecoId,
                             cep: cep,
                             estado: estado,
                             cidade: cidade,
@@ -179,6 +181,7 @@ async function carregarImovelParaEdicao(id) {
         document.getElementById('rua').value = imovel.endereco?.rua || '';
         document.getElementById('num').value = imovel.endereco?.numero || '';
         document.getElementById('comple').value = imovel.endereco?.complemento || '';
+        enderecoId = imovel.endereco?.id || null;
         document.getElementById('descricao').value = imovel.descricao || '';
         document.getElementById('status').value = imovel.status || '';
         document.getElementById('finalidade').value = imovel.tipo || '';
