@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+:root{
+    --branco:#FFFFFF;
+    --azul-escuro:#2F3D7E;
+    --azul-claro:#566CD2;
+    --laranja:#EE7D39;
+    --cinza:#A4A4A4;
+    --cinza-claro:#A4A4A447;
+    --verde-escuro:#007C73;
+    --verde-claro:#C9E3E1;
+    --vermelho-escuro:#C93429;
+    --vermelho-claro:#C93429;
+}
+
+/* Estrutura */
+body{
+    background-color: var(--branco);
+}
+
+/*Modal
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 1000;
+}
+*/
+
+/*Modal para vizualização no navegador(se quiser utiliza-lo sem o back então coloque o modal acima em comentario e tire esse aqui)*/
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 1000;
+}
+
+
+/*Container do Modal*/
+.modal-container{
+    position: relative;
+    width: 700px;
+    max-width: 90%;
+    background-color: var(--branco);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    overflow: hidden; /* Mantém os cantos arredondados */
+}
+
+#modalContainerCliente{
+  position: relative; width: 700px; 
+  max-width: 90%; 
+  max-height: 90vh; 
+  overflow-y: auto; 
+  padding: 35px; 
+  background-color: var(--branco); 
+  border-radius: 20px; 
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);  
+}
+
+.modal-conteudo{
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 35px;
+}
+
+/*Botão Fechar*/
+.btn-fechar{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--cinza);
+    transition: 0.2s;
+}
+
+.btn-fechar:hover{
+    color: var(--vermelho-escuro);
+}
+
+hr{
+    border: 0;
+    height: 1px;
+    background-color: #d9d9d9;
+    margin: 20px 0;
+}
+
+/*Formulário*/
+#formCadastro, #formImovel, #formContrato, #formCliente{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.campo{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.modal-container h1{
+    color: var(--azul-escuro);
+    font-size: 32px;
+}
+
+#formContrato h2{
+    color: var(--azul-escuro);
+    font-size: 22px;
+}
+
+/*Labels*/
+#formCadastro label, #formImovel label, #formContrato label, #formCliente label{
+    font-weight: 600;
+    color: #000000;
+}
+
+/*Inputs e Selects */
+#formCadastro input, #formImovel input, #formContrato input, #formCliente input,
+#formCadastro select, #formImovel select, #formContrato select, #formCliente select{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--cinza-claro);
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+}
+
+#formCadastro input:focus, #formImovel input:focus, #formContrato input:focus, #formCliente input:focus, 
+#formCadastro select:focus, #formImovel select:focus, #formContrato select:focus, #formCliente select:focus{
+    border-color: var(--azul-claro);
+}
+
+/*Botão*/
+.btn{
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn button{
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.btn button:hover{
+    background-color: var(--azul-claro);
+}
