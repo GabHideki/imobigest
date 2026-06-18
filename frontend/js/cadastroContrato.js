@@ -1,5 +1,6 @@
 let contratoId = null;
 let isCorretor = false;
+let imoveisCache = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
     const usuarioLogadoTexto = localStorage.getItem('usuarioLogado');
@@ -148,6 +149,7 @@ async function carregarImoveis() {
         if (!response.ok) throw new Error('Falha ao buscar imóveis');
         
         const imoveis = await response.json();
+        imoveisCache = imoveis;
         const selectImovel = document.getElementById('imovelId');
 
         imoveis.forEach(imovel => {
@@ -157,6 +159,70 @@ async function carregarImoveis() {
             selectImovel.appendChild(option);
         });
     } catch (error) {
+    }
+}
+
+function obterImovelSelecionado(idImovel) {
+    const id = parseInt(idImovel, 10);
+    return imoveisCache.find(imovel => imovel.id === id) || null;
+}
+
+function validarImovelParaTipoContrato(imovel, tipoContrato) {
+    if (!imovel) {
+        alert('Não foi possível encontrar o imóvel selecionado.');
+        return false;
+    }
+
+    const finalidade = String(imovel.tipo || '').toUpperCase();
+    const tipo = String(tipoContrato || '').toUpperCase();
+
+    if (tipo === 'ALUGUEL' && finalidade !== 'ALUGUEL' && finalidade !== 'AMBOS') {
+        alert('Este imóvel não está disponível para aluguel. Escolha um imóvel com finalidade ALUGUEL ou AMBOS.');
+        return false;
+    }
+
+    if (tipo === 'VENDA' && finalidade !== 'VENDA' && finalidade !== 'AMBOS') {
+        alert('Este imóvel não está disponível para venda. Escolha um imóvel com finalidade VENDA ou AMBOS.');
+        return false;
+    }
+
+    return true;
+}
+
+async function atualizarStatusImovel(idImovel, novoStatus) {
+    const response = await fetch(`http://localhost:8080/imoveis/${idImovel}`);
+    if (!response.ok) {
+        throw new Error('Não foi possível buscar os dados do imóvel para atualização de status.');
+    }
+
+    const imovel = await response.json();
+    const statusAtual = String(imovel.status || '').toUpperCase();
+    const statusDesejado = String(novoStatus || '').toUpperCase();
+
+    if (statusAtual === statusDesejado) {
+        return;
+    }
+
+    const payload = {
+        nome: imovel.nome,
+        descricao: imovel.descricao,
+        status: statusDesejado,
+        tipo: imovel.tipo,
+        valorCompra: imovel.valorCompra || null,
+        valorAluguel: imovel.valorAluguel || null,
+        endereco: imovel.endereco || null
+    };
+
+    const updateResponse = await fetch(`http://localhost:8080/imoveis/${idImovel}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    });
+
+    if (!updateResponse.ok) {
+        throw new Error('Falha ao atualizar o status do imóvel.');
     }
 }
 
@@ -244,6 +310,16 @@ async function salvarContrato() {
             return;
         }
 
+        const imovelSelecionado = obterImovelSelecionado(imovelId);
+        if (!imovelSelecionado) {
+            alert('Não foi possível validar o imóvel selecionado. Atualize a página e tente novamente.');
+            return;
+        }
+
+        if (!validarImovelParaTipoContrato(imovelSelecionado, tipoContrato)) {
+            return;
+        }
+
         const contratoPayload = {
             status: statusContrato,
             prazoMeses: parseInt(prazoContrato),
@@ -288,7 +364,27 @@ async function salvarContrato() {
             throw new Error(`Erro ao salvar o contrato. Código ${response.status}`);
         }
 
-        const mensagem = contratoId ? 'Contrato atualizado com sucesso!' : 'Contrato cadastrado com sucesso!';
+        let mensagem = contratoId ? 'Contrato atualizado com sucesso!' : 'Contrato cadastrado com sucesso!';
+
+        if (statusContrato.toUpperCase() === 'ATIVO') {
+            const novoStatusImovel = tipoContrato.toUpperCase() === 'ALUGUEL' ? 'ALUGADO' : 'VENDIDO';
+            try {
+                await atualizarStatusImovel(parseInt(imovelId), novoStatusImovel);
+            } catch (statusError) {
+                alert(`${mensagem} Porém, não foi possível atualizar o status do imóvel: ${statusError.message}`);
+                window.location.href = '/contrato.html';
+                return;
+            }
+        } else if (statusContrato.toUpperCase() === 'INATIVO') {
+            try {
+                await atualizarStatusImovel(parseInt(imovelId), 'DISPONIVEL');
+            } catch (statusError) {
+                alert(`${mensagem} Porém, não foi possível atualizar o status do imóvel: ${statusError.message}`);
+                window.location.href = '/contrato.html';
+                return;
+            }
+        }
+
         alert(mensagem);
         window.location.href = '/contrato.html';
 
